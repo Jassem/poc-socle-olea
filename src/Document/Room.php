@@ -31,8 +31,27 @@ class Room
     protected $name;
 
     /**
+     * @var string $style
+     * @ODM\Field(type="string", nullable=true)
+     */
+    protected $style;
+
+    /**
+     * @var string $client
+     * @ODM\Field(type="string", nullable=true)
+     */
+    protected $client;
+
+    /**
+     * @var string $numeroCommande
+     * @ODM\Field(type="string", nullable=true)
+     */
+    protected $numeroCommande;
+
+
+    /**
      * @var string $description
-     * @ODM\Field(type="string")
+     * @ODM\Field(type="string", nullable=true)
      */
     protected $description;
 
@@ -44,7 +63,7 @@ class Room
 
     /**
      * @var bool $published
-     * @ODM\Field(type="bool")
+     * @ODM\Field(type="bool", nullable=true)
      */
     private $published=false;
 
@@ -121,7 +140,53 @@ class Room
         $this->published = $published;
     }
 
+    /**
+     * @return string
+     */
+    public function getStyle(): ?string
+    {
+        return $this->style;
+    }
 
+    /**
+     * @param string $style
+     */
+    public function setStyle(string $style): void
+    {
+        $this->style = $style;
+    }
+
+    /**
+     * @return string
+     */
+    public function getClient(): ?string
+    {
+        return $this->client;
+    }
+
+    /**
+     * @param string $client
+     */
+    public function setClient(string $client): void
+    {
+        $this->client = $client;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNumeroCommande(): ?string
+    {
+        return $this->numeroCommande;
+    }
+
+    /**
+     * @param string $numeroCommande
+     */
+    public function setNumeroCommande(string $numeroCommande): void
+    {
+        $this->numeroCommande = $numeroCommande;
+    }
 
 
 }

@@ -15,7 +15,7 @@ namespace App\Controller;
 class RoomController extends AbstractController
 {
     /**
-     * @Route("/", name="admin.room.index")
+     * @Route("/admin", name="admin.room.index")
      * @param DocumentManager $dm
      * @return Response
      */
