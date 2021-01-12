@@ -59,7 +59,7 @@
                     <td>
                         <a href="{{ path('admin.room.edit', {id: room.id}) }}" class="btn btn-secondary d-inline-block">Editer</a>
 
-                        <form method="post" action="{{ path('admin.room.delete', {id: room.id}) }}" class="d-inline-block" onsubmit="confirm('are you sure?')">
+                        <form method="post" action="{{ path('admin.room.delete', {id: room.id}) }}" class="d-inline-block">
                             <input type="hidden" name="_method" value="DELETE"/>
                             <input type="hidden" name="_token" value="{{ csrf_token('delete'~room.id) }}">
                             <button class="btn btn-danger">Supprimer</button>

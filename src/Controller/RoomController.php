@@ -117,7 +117,7 @@ class RoomController extends AbstractController
         $styles = ['Méditerranée', 'Scandinave', 'Jungle','Nature', 'Papier peint'];
         $clients = ['Marc Dupont', 'Julie Martin', 'Alice Bernard', 'Louise Robert' , 'Gabriel Dubois', 'Léo Michel'];
         // create rooms
-        for ($i = 1; $i <= 10000; $i++) {
+        for ($i = 1; $i <= 1000; $i++) {
             $room = new Room();
             $room->setStatus("Approved");
             $room->setPublished(true);
