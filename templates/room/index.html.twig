@@ -7,11 +7,45 @@
              <div class="alert alert-success">{{ message }}</div>
          {% endfor %}
 
+         <div class="jumbotron">
+             <div class="container">
+                 {{ form_start(form) }}
+                 <div class="form-row align-items-end">
+                     <div class="col">
+                         {{form_row(form.name) }}
+                     </div>
+                     <div class="col">
+                         {{ form_row(form.style) }}
+                     </div>
+                     <div class="col">
+                         {{ form_row(form.client) }}
+                     </div>
+                     <div class="col">
+                         {{ form_row(form.numeroCommande) }}
+                     </div>
+                     <div class="col">
+                         <div class="form-group">
+                             <button class="btn btn-secondary">Rechercher</button>
+                         </div>
+                     </div>
+                 </div>
+                 {{ form_end(form) }}
+             </div>
+         </div>
+
+         <div class="rom">
+             <div class="text-right">
+                 <a href="{{ path('admin.room.new') }}" class="btn btn-primary">Creer une nouvelle Room</a>
+             </div>
+         </div>
+
          <table class="table table-striped">
              <thead>
              <tr>
-                 <th>Titre</th>
-                 <th>Statut</th>
+                 <th>Nom</th>
+                 <th>Style</th>
+                 <th>Client</th>
+                 <th>N° Commande</th>
                  <th>Actions</th>
              </tr>
              </thead>
@@ -19,7 +53,9 @@
              {% for room in rooms  %}
                 <tr>
                     <td>{{ room.name }}</td>
-                    <td>{{ room.status }}</td>
+                    <td>{{ room.style }}</td>
+                    <td>{{ room.client }}</td>
+                    <td>{{ room.numeroCommande }}</td>
                     <td>
                         <a href="{{ path('admin.room.edit', {id: room.id}) }}" class="btn btn-secondary d-inline-block">Editer</a>
 
@@ -33,10 +69,6 @@
              {% endfor %}
              </tbody>
          </table>
-         <div class="text-right">
-
-             <a href="{{ path('admin.room.new') }}" class="btn btn-primary">Creer une nouvelle Room</a>
-         </div>
      </div>
  {% endblock %}
 

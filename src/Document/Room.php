@@ -7,7 +7,7 @@ use MongoDB\BSON\Timestamp;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ODM\Document(collection="rooms")
+ * @ODM\Document(collection="rooms", repositoryClass="App\Repository\RoomRepository")
  */
 class Room
 {
@@ -71,7 +71,7 @@ class Room
     /**
      * @return string
      */
-    public function getId(): string
+    public function getId(): ?string
     {
         return $this->id;
     }
@@ -79,7 +79,7 @@ class Room
     /**
      * @return string
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -95,7 +95,7 @@ class Room
     /**
      * @return string
      */
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
@@ -127,7 +127,7 @@ class Room
     /**
      * @return bool
      */
-    public function isPublished(): bool
+    public function isPublished(): ?bool
     {
         return $this->published;
     }

@@ -4,56 +4,61 @@ namespace App\Form;
 
 use App\Document\Room;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
-
-class RoomType extends AbstractType
+class RoomSearchType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name');
-        $builder->add('description', TextareaType::class);
-        $builder->add('status', ChoiceType::class, [
-            'choices' => $this->getChoices()])
+        $builder
+            ->add('name', TextType::class, [
+                'required' => false,
+                'label' => false,
+                'attr' => [
+                    'placeholder' => 'Nom de Room'
+                ]
+            ])
             ->add('client', TextType::class, [
                 'required' => false,
+                'label' => false,
                 'attr' => [
                     'placeholder' => 'Client'
                 ]
             ])
             ->add('style', TextType::class, [
                 'required' => false,
+                'label' => false,
                 'attr' => [
                     'placeholder' => 'Style'
                 ]
             ])
             ->add('numeroCommande', TextType::class, [
                 'required' => false,
+                'label' => false,
                 'attr' => [
                     'placeholder' => 'Numero Commande'
                 ]
-            ])
-            ->add('published');
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'data_class' => Room::class,
+            'method' => 'get',
+            'csrf_protection' => false
         ]);
     }
 
-    private function getChoices()
+    public function getBlockPrefix()
     {
-        $choices = Room::STATUS;
-        $output = [];
-        foreach ($choices as $k => $v) {
-            $output[$v] = $k;
-        }
-        return $output;
+        return '';
     }
+
 }

@@ -5,8 +5,10 @@ namespace App\Controller;
 
     use App\Document\Room;
     use App\Form\RoomType;
+    use App\Form\RoomSearchType;
     use Doctrine\ODM\MongoDB\DocumentManager;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\JsonResponse;
     use Symfony\Component\HttpFoundation\RedirectResponse;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;
@@ -17,12 +19,23 @@ class RoomController extends AbstractController
     /**
      * @Route("/admin", name="admin.room.index")
      * @param DocumentManager $dm
+     * @param Request $request
      * @return Response
      */
-    public function index(DocumentManager $dm)
+    public function index(DocumentManager $dm, Request $request)
     {
-        $rooms = $dm->getRepository(Room::class)->findAll();
-        return $this->render('room/index.html.twig', compact('rooms'));
+        $search = new Room();
+        $form = $this->createForm(RoomSearchType::class, $search);
+        $form->handleRequest($request);
+        $rooms = $dm->getRepository(Room::class)->getResultSearch($search);
+        //dd($rooms);
+        // $this->repository->paginateAllVisible($search, $request->query->getInt('page', 1))
+        return $this->render('room/index.html.twig', [
+            'rooms' => $rooms,
+            'form' => $form->createView()
+        ]);
+
+        // return $this->render('room/index.html.twig', compact('rooms'));
     }
 
     /**
@@ -92,5 +105,32 @@ class RoomController extends AbstractController
         }
         return $this->redirectToRoute('admin.room.index');
 
+    }
+
+    /**
+     * @Route("/admin/load-data", name="admin.room.load.data")
+     * @param DocumentManager $dm
+     * @return Response
+     */
+    public function loadData(DocumentManager $dm)
+    {
+        $styles = ['Méditerranée', 'Scandinave', 'Jungle','Nature', 'Papier peint'];
+        $clients = ['Marc Dupont', 'Julie Martin', 'Alice Bernard', 'Louise Robert' , 'Gabriel Dubois', 'Léo Michel'];
+        // create rooms
+        for ($i = 1; $i <= 10000; $i++) {
+            $room = new Room();
+            $room->setStatus("Approved");
+            $room->setPublished(true);
+            $room->setName("Room ".$i);
+            $room->setDescription("Description de la Room ".$i);
+            $room->setClient($clients[mt_rand(0, 5)]);
+            $room->setNumeroCommande("CDE-LM-0". mt_rand(10, 100));
+            $room->setStyle($styles[mt_rand(0, 4)]);
+            $dm->persist($room);
+        }
+
+        $dm->flush();
+
+        return new JsonResponse('ok');
     }
 }
